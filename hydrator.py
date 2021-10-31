@@ -58,7 +58,7 @@ def tweetshydrator(inputfile,outputfile,keyfile):
 
     inputfile_data = inputfile_data.set_index('tweet_id')
     
-    ids = list(inputfile_data.index)[0:200]
+    ids = list(inputfile_data.index)
     print('total ids: {}'.format(len(ids)))
 
     start = 0
