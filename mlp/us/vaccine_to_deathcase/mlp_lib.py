@@ -35,6 +35,7 @@ class MLP:
         ax=sns.heatmap(datacor, square=True, annot=True, fmt=".3f", linewidths=5, cmap="YlGnBu", cbar_kws={"fraction":0.046,"pad":0.03})
         #plt.show()
         file_name = 'heatmap_' + file_name_element + '.png'
+        plt.savefig("output\\" + file_name)
 
         # transfer dateframe to tensor which will be used by pytorch network
         # print(X_train_s, y_train, X_test_s, y_test)
