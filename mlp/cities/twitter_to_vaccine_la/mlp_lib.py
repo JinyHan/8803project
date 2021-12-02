@@ -16,10 +16,10 @@ class MLP:
     def __init__(self, test_size=0.3, random_state=42):
         self.test_size = test_size
         self.random_state = random_state
-    def predict(self, sentiment_and_other_features, predict_content, file_name_element):    
+    def predict(self, sentiment_feature, predict_content, file_name_element):    
     # split test and train
-        feature_names=['sentiment', 'n', 'retweet', 'favorite', 'followers', 'friends', 'user_favorite']
-        X_train, X_test, y_train, y_test = train_test_split(sentiment_and_other_features, predict_content, test_size=0.3, random_state=42)
+        feature_names=['sentiment140', 'n']
+        X_train, X_test, y_train, y_test = train_test_split(sentiment_feature, predict_content, test_size=0.3, random_state=42)
         # standard scaler
         scale = StandardScaler()
         X_train_s = scale.fit_transform(X_train)
@@ -29,12 +29,13 @@ class MLP:
         featuredf.dropna(inplace=True)
 
         # heatmap for correlation between all the features and predict target
-        datacor=np.corrcoef(featuredf.values,rowvar=0)
-        datacor=pd.DataFrame(data=datacor,columns=featuredf.columns,index=featuredf.columns)
-        plt.figure(figsize=(7,6))
-        ax=sns.heatmap(datacor,square=True,annot=True,fmt=".3f",linewidths=5,cmap="YlGnBu",cbar_kws={"fraction":0.046,"pad":0.03})
-        #plt.show()
-        file_name = 'heatmap_' + file_name_element + '.png'
+        # datacor=np.corrcoef(featuredf.values,rowvar=0)
+        # datacor=pd.DataFrame(data=datacor,columns=featuredf.columns,index=featuredf.columns)
+        # plt.figure(figsize=(4,6))
+        # ax=sns.heatmap(datacor,square=True,annot=True,fmt=".3f",linewidths=5,cmap="YlGnBu",cbar_kws={"fraction":0.046,"pad":0.03})
+        # #plt.show()
+        # file_name = 'heatmap_' + file_name_element + '.png'
+        # plt.savefig("output\\" + file_name)
 
         # transfer dateframe to tensor which will be used by pytorch network
         # print(X_train_s, y_train, X_test_s, y_test)
@@ -53,7 +54,7 @@ class MLP:
             def __init__(self):
                 super(MLPregression, self).__init__()
                 # define the first hid layer
-                self.hidden1 = nn.Linear(in_features=7, out_features=100, bias=True)  # 2*100 2个属性特征
+                self.hidden1 = nn.Linear(in_features=2, out_features=100, bias=True)  # 2*100 2个属性特征
                 # define the second hid layer
                 self.hidden2 = nn.Linear(100, 100)  # 100*100
                 # the third hid layer
