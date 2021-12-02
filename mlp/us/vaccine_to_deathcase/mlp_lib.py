@@ -31,7 +31,7 @@ class MLP:
         # heatmap for correlation between all the features and predict target
         datacor=np.corrcoef(featuredf.values, rowvar=0)
         datacor=pd.DataFrame(data=datacor, columns=featuredf.columns,index=featuredf.columns)
-        plt.figure(figsize=(2, 6))
+        plt.figure(figsize=(6, 6))
         ax=sns.heatmap(datacor, square=True, annot=True, fmt=".3f", linewidths=5, cmap="YlGnBu", cbar_kws={"fraction":0.046,"pad":0.03})
         #plt.show()
         file_name = 'heatmap_' + file_name_element + '.png'
