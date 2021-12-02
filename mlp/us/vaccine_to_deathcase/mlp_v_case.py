@@ -4,42 +4,41 @@ import pandas as pd
 #  we use chunksize to avoid memeory problems
 from matplotlib import pyplot as plt
 
-chunks = pd.read_csv('vaccinations_in_the_us.csv', header=2, usecols=['Date Type', 'Date', 'Daily Count People Receiving Dose 1', 'People Receiving 1 or More Doses Cumulative'], chunksize=100)
-data = []
-for chunk in chunks:
-    chunk.dropna(inplace=True)
-    # chunk = chunk[chunk['Date Type'] == 'Admin']
-    for index, row in chunk.iterrows():
-        if row['Date Type'] == 'Admin':
-            data.append(row)
-data = np.array(data)
-result = data[:, 2][:100]
+
+df_death = pd.read_csv("data_table_for_daily_case_trends__the_united_states.csv", header=2, usecols=["New Cases", "Date"])
+df_death_new = df_death["New Cases"][:322][::-1]
+result = np.array(df_death_new)
+print(df_death_new)
+
+df = pd.read_csv('vaccinations_in_the_us.csv', header=2, usecols=['Date Type', 'Date', 'Daily Count People Receiving Dose 1', 'People Receiving 1 or More Doses Cumulative'])
+df = df[df['Date Type'] == "Admin"]
+
+
+sentiment140 = df[['Daily Count People Receiving Dose 1', 'People Receiving 1 or More Doses Cumulative']]
+print(sentiment140)
+
+data = np.array(df)
+#result = data[:, 2][:100]
 result_for_pre = data[:, 2][100:200]
-
-
 sentimental = pd.read_csv('SentimentIndex.csv', header=0)
 sentimental.dropna(inplace=True)
-sentiment140 = sentimental[['sentiment140', 'textblob2']][12:112]
+#sentiment140 = sentimental[['sentiment140', 'textblob2']][12:112]
 sent140_for_pre = sentimental[['sentiment140', 'textblob2']][112:212]
 textblob = sentimental['textblob2'][12:112]
 vader = sentimental['vader']
 n = sentimental['n']
 
-
-
-feature_df_5 = pd.read_csv("twitterfeatures.csv", header=0, usecols=[])
-
 # read file second way
 # with open and for line in f
 # import csv
 # with open('vaccinations_in_the_us.csv', 'r') as f:
-# 	reader = csv.reader(f)
-# 	data = [row for row in reader]
+#   reader = csv.reader(f)
+#   data = [row for row in reader]
 # print(data)
 # f is iterable object
 # for line in f:
-# 	# will use buffered IO memory management
-# 	print(line)
+#   # will use buffered IO memory management
+#   print(line)
 
 
 import numpy as np
@@ -52,7 +51,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as Data
-import seaborn as sns
 
 # 导入数据
 housedata = fetch_california_housing()
