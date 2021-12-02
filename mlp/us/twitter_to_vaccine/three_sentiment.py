@@ -30,11 +30,11 @@ if __name__ == "__main__":
 
 
     # 10% twitter feature
-    # twitter_feature_file = "twitterfeatures_10.csv"
-    # percent_str = "10percent_"
+    twitter_feature_file = "twitterfeatures_10.csv"
+    percent_str = "10percent_"
     # 5% twitter feature
-    twitter_feature_file = "twitterfeatures_5.csv"
-    percent_str = "5percent_"
+    # twitter_feature_file = "twitterfeatures_5.csv"
+    # percent_str = "5percent_"
     sentiment140, textblob2, vader = read_twitter_features(twitter_feature_file)
     mlp = MLP()
     predict(mlp, sentiment140, textblob2, vader, daily_result, "daily_result", percent_str)
